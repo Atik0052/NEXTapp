@@ -1,0 +1,2 @@
+# NEXTapp
+Next JS application
