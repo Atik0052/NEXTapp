@@ -1,0 +1,49 @@
+{
+    "messages": [
+        {
+            "user": "generate token - python",
+            "assistant": "Sure. Here's an example of how to generate a token in Python. \n\n```python \n\nimport requests \n\nurl = 'https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C- X9XX56B0380XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=ALL' \n\npayload = {} \n\nheaders = { \n\n  'Content-Type': 'application/json' \n\n} \n\nresponse = requests.request(\"GET\", url, headers=headers, data=payload) \n\nprint(response.text) \n\n``` \n\nIn the above code, make sure to replace '<Base64_Encoded_Password>' with your actual Base64 encoded password. The response will be the authentication token that you can use for subsequent API calls. \n\nFor more details, you can refer to the API documentation here: Token Generation ",
+            "feedback": ""
+        },
+        {
+            "user": " send OTP - python",
+            "assistant": "Sure! Here's an example of sending an OTP using Python:\n\n```python\nimport requests\n\nurl = \"https://cpaas.messagecentral.com/verification/v2/verification/send?country=IN&customerId=C-X9XX56B0380XXX&mobileNumber=99906XXX25&templateId=TEMPLATE_0009\"\n\npayload = {}\n\nheaders = {\n  'authToken': '<authToken>',\n  'Content-Type': 'application/json'\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\n```\n\nMake sure to replace '<authToken>' with the actual authentication token received from the token generation API.\n\nFor more details, you can refer to the API documentation here: Send OTP",
+            "feedback": ""
+        },
+        {
+            "user": " ",
+            "assistant": "",
+            "feedback": ""
+        },
+        {
+            "user": " validate OTP - python",
+            "assistant": "Certainly! Here's an example of how to validate an OTP using Python: \n\n```python\n\nimport requests\n\nurl = \"https://cpaas.messagecentral.com/verification/v2/verification/validate?country=IN&customerId=C-X9XX56B0380XXX&mobileNumber=99906XXX25&otp=123456&verificationId=<verificationId>\"\n\npayload = {}\n\nheaders = {\n\n  'authToken': '<authToken>',\n\n  'Content-Type': 'application/json'\n\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\n\n```\n\nMake sure to replace '<authToken>' with the actual authentication token received from the token generation API. Also, replace '<verificationId>' with the actual verification ID received in the response of the 'send' API.\n\nFor more details, you can refer to the API documentation here: Validate \n\n```",
+            "feedback": ""
+        },
+        {
+            "user": " validate OTP - python",
+            "assistant": "Certainly! Here's an example of how to validate an OTP using Python:\n\n```python\nimport requests\n\nurl = \"https://cpaas.messagecentral.com/verification/v2/verification/verify?country=IN&customerId=C-X9XX56B0380XXX&mobileNumber=99906XXX25&otp=123456\"\n\npayload = {}\n\nheaders = {\n  'authToken': '<authToken>',\n  'Content-Type': 'application/json'\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\n```\n\nIn the code, make sure to replace '<authToken>' with the actual authentication token received from the token generation API.\n\nFor more details, you can refer to the API documentation here: Verify OTP",
+            "feedback": ""
+        },
+        {
+            "user": " send OTP from python to php",
+            "assistant": "To Send an OTP from Python to PHP, you can use the 'requests' library in Python, and in PHP, you can use the 'file_get_contents' function. Below is an example:\n\nPython (Using requests library):\n\nimport requests\n\nurl = \"https://cpaas.messagecentral.com/verification/v2/verification/send?country=IN&customerId=C-X9DFA4D3F7BXXX&flowType=SMS&mobileNumber=9XXXXXX25\"\n\npayload = {}\n\nheaders = {\n\n'authToken': '<authToken>',\n\n'Content-Type': 'application/json'\n\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\n\n\nPHP:\n\n<?php\n\n$url = \"https://cpaas.messagecentral.com/verification/v2/verification/send?country=IN&customerId=C-X9DFA4D3F7BXXX&flowType=SMS&mobileNumber=9XXXXXX25\";\n\n$options = array(\n\n'http' => array(\n\n'method' => \"POST\",\n\n'header' => \"authToken: <authToken>\\r\\n\" .\n\n\"Content-Type: application/json\\r\\n\",\n\n'content' => $data\n\n)\n\n);\n\n$context = stream_context_create($options);\n\n$result = file_get_contents($url, false, $context);\n\necho $result;\n\n?>\n\nIn both the Python and PHP code, make sure to replace '<authToken>' with the actual authentication token received from the token generation API. \n\nFor more details, you can refer to the API documentation here: Send OTP",
+            "feedback": ""
+        },
+        {
+            "user": "help me write a comprehensive technical documentation on how to use verify now",
+            "assistant": "Certainly! Here's a comprehensive technical documentation on how to use 'Verify Now' with the necessary endpoints, parameters, and sample API requests and responses.\n\nPlease find the detailed documentation in the attached file.  'Verify Now' API Documentation",
+            "feedback": ""
+        },
+        {
+            "user": " write the step by step process on how to send & validate otp using verify now",
+            "assistant": "",
+            "feedback": ""
+        },
+        {
+            "user": " write the step by step process on how to send & validate otp using verify now",
+            "assistant": "Step-by-Step Process: Sending and Validating OTP using 'Verify Now' \n\nSending the OTP: \n\nStep 1: Generate an Authentication Token by calling the '/auth/token' endpoint. \n\nStep 2: Use the Authentication Token in the Request Header to call the '/verification/v2/verification/send' endpoint. \n\nStep 3: Pass the mandatory parameters: countryCode, mobileNumber, and 'flowType' as 'SMS'. \n\nStep 4: Receive the Response. If the Response Code is 200, the OTP has been successfully sent. \n\nValidating the OTP: \n\nStep 1: Use the Authentication Token in the Request Header to call the '/verification/v2/verification/validate' endpoint. \n\nStep 2: Pass the mandatory parameters: countryCode, mobileNumber, 'flowType' as 'SMS', and 'otp'. \n\nStep 3: Receive the Response. If the Response Code is 200, the OTP is valid. \n\nNote: The OTP validation is a one-time check. If the OTP is valid, the status will be 'SUCCESS'. If the OTP is invalid, the status will be 'FAIL'. \n\nFor a more detailed understanding, please refer to the API Documentation provided in the previous response. \n\n \n\n'Documentation Link: 'Verify Now' API Documentation",
+            "feedback": ""
+        }
+    ]
+}

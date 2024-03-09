@@ -1,0 +1,420 @@
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Verify Now API documentation"
+    },
+    {
+      "role": "assistant",
+      "content": "  \nVerify Now  - API Document  \nVersion  – 1.0 Introduction  \nMobile p hone numbers serve  as the ultimate user identity in the digital  universe. Digital applications,  \nwhether on the web  or on mobile verify the mobile numbers of their users to ensure their authenticity. \nTo address this growing need, U2opia has developed a reliable, quick,  and cost -effective mobile number \nverification service called Verify Now  \nHelp and S upport  \nFor implementation support and any feedback, please reach out to  us at \noperations@messagecentral.com  \nAPI Request and Response  \nThe API will only accept requests fro m the service provider via the API Endpoint URI shared with the \nservice provider and from whitelisted IP addresses over HTTP, partner to provide a list of source IP.  \nREST API Base URL’s:  \nAll Platform API endpoints below should be prefixed with the following URL:  \nhttps://cpaas .messagecentral.com  \n \nGenerate  Token  \nTo generate Auth Token for send otp & valida te otp header.  For now, the Auth Token automatically \nexpires in 30 minutes.  \n \nField  Type  Mandatory  Description  \ncustomerId  String  yes Customer identifier  \ncountry  Integer  no Country  \nEmail  String  no Email  \nkey String  yes Base -64 encrypted password  \nscope  String  no Use ‘NEW’  \n \n \n \n \n \n \n  \n \n  4 | P a g e  \n \nRequest URL Path: Response JSON:  \n \nA successful response will return a 200 status code . \n \n \nBelow in an example success generate token : \n \ncurl --location \n'https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId =C-\nX6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_ Encoded_Password> &scope=NE\nW' \\ \n--header 'accept: */ *' \n \n  /auth /v1/ authentication/token  \n           \n{ \n    \"status\":  Integer , \n    \"token\":  \"String \" \n} \n{ \n    \"status\":  200,  \n    \"token\":  \"eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDLOTQ2RSIsMSwiZXhwIjoxNjkyMTgwNDAxfQ.I -\nMsGOVDnRApFYNeLm4yErKxcW_PqMPweMH9a0y62xqO_b3cvZ96hLXp7UbQ\"  \n}  \n \n  5 | P a g e  \n \nSend O TP \nTo send OTP  on a mobile number below are the request parameters.  \n \nRequest Header  Type  Mandatory  \nauthToken  String  yes \n \nField  Type  Mandatory  Description  \ncustomerId  String  yes Customer identifier  \ncountryCode  String  yes Country code  \notpLength  Integer  no Send a number between 4 and 8. Default is \n4 \nmobileNumber  String  yes Mobile number  \nflowType  String  yes We send OTP using multiple mediums  like \nSMS , email , etc. \nfor now , use SMS only  \nemail  String  no Email is used when we send OTP through \nmail  \nlangId  String  no For sending SMS in different languages.  \nBy default language is English.  \nFor now,  we support English -only  \n  \n \n  6 | P a g e  \n \nRequest URL Path:  \n \nResponse JSON:  \nA successful response will return a 200 status code . \n  /verification /v2/verif ication/send  \n           \n{ \n  \"responseCode\": Integer,  \n  \"message\": \"String\",  \n  \"data\": {  \n    \"verificationId\": \"String\",  \n    \"mobileNumber\": \"String\",  \n    \"responseCode\": \"String\",  \n    \"errorMessage\": \"String\",  \n    \"timeout\": \"String\",  \n    \"smsCLI\": \"String\",  \n    \"transactionId\": \"S tring\"  \n  } \n}  \n \n  7 | P a g e  \n \nBelow in an example success send otp:  \ncurl --location --request POST \n'https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C -\nX6CXXB61FB71XXX&flowType=SMS&mobileNumber=98XXXX08XX&otpLength=4' \\ \n--header  'authTo ken: \neyJhbGciOiJIUzUxMiJ9.eyJzdL IiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwI\njoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo -\nT4AXXmgpqXjP56NYh6mFvLQzI__uaA'  \n \n \n  { \n  \"responseCode\": 200,  \n  \"message\": \"SUCCESS\",  \n  \"data\": {  \n    \"verificationId\": \"20\",  \n    \"mobileNumber\": \" 8846735392\",  \n    \"responseCode\": \"200\",  \n    \"errorMessage\": null,  \n    \"timeout\": \"60\",  \n    \"smsCLI\": null,  \n    \"transactionId\": null  \n  } \n}  \n \n  8 | P a g e  \n \nValidate O TP \nTo validate below are fields.  \n \nRequest Header  Type  Mandatory  \nauthToken  String  yes \n \nField  Type  Mandatory  Description  \ncustomerId  String  Yes Customer identifier  \ncode  String  Yes Otp  \nverificationId  Long  Yes VerificationId from response of sendOtp \napi \nlangId  String  no For multiple language support  \nby default is English.  \nFor now we support English only  \n \nRequest URL Path:  \n \nResponse JSON:  \nA successful response will return a 200 status code . \n \n  /verification/v2 /verification/validateOtp  \n \n{ \n  \"responseCode\": Integer,  \n  \"message\": \"string\",  \n  \"data\": {  \n    \"verificationId\": Long,  \n    \"mobileNumber\": \"String\",  \n    \"verificationStatus\": \"String\",  \n    \"responseCode\": \"String\",  \n    \"errorMessage\": \"String\",  \n    \"transactionId\": \"String\",  \n    \"authToken\": \"String\"  \n  } \n}  \n \n  9 | P a g e  \n \nBelow is an example of successful validation  \ncurl --location \n'https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileN\number=98XX XX08XX&verificationId=20&customerId=C -X6CXXB61FB71XXX&code=8289' \\ \n--header 'authToken: \neyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwI\njoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo -\nT4AXXmgp qXjP56NYh6mFvLQzI__uaA'  \n \n \n  { \n  \"responseCode\": 200,  \n  \"message\": \"SUCCESS\",  \n  \"data\": {  \n    \"verificationId\": 20,  \n    \"mobileNumber\": \" 8846735392\",  \n    \"verificationStatus\": \"VERIFICATION_COMPLETED\",  \n    \"responseCode\": \"200\",  \n    \"errorMessage\": null,  \n    \"transactionId\": null,  \n    \"authToken\":   eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6  \nMTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEan\nH64AD6JkiAv2zIReANR6pgmGEoo -T4AXXmgpqXjP56NYh6mFvLQzI__uaA  \n  } \n}  \n \n  10 | P a g e  \n \nSTATUS CODES  \n \nCode  Display Text  \n200 Success (Request Received / VERIFICATION_COMPLETED)  \n400 Bad Request  \n404 Resource Not Found  \n409 Duplicate Resource  \n500 Unknown Response. Please Try again later.  \n501 INVALID_CUSTOMER_ID  \n503 INVALID_ISOCOUNTRYCODE  \n504 INVALID_MOBILE_NUMBERFORMAT  \n505 INVALID_VERIFICATION_ID  \n506 REQUEST_ALREADY_EXISTS  \n507 NO_ACTIVE_DID_FOUND  \n508 ALL_CREDITS_EXHAUSTED  \n509 WRONG_CALL_FLOW_INIT_STATE_USED  \n700 VERIFICATION_FAILED  \n701 TRYING_FALLBACK  \n702 WRONG_OTP_PROVIDED  \n703 ALREADY_VERIFIED  \n704 NOT_VALID_TYPE_REQUEST  \n705 TRYING_FALLBACK_SMS_DELIVERED  \n706 TRYING_FALLBACK_SMS_NOT_DELIVERED  \n707 SMS_DELIVERED_SUCCESSFULLY  \n708 SMS_DELIVERY_REPORT_PENDING  \n709 WRONG_DID_PROVIDED  \n711 COUNTRY_NOT_SUPPORTED_OTP_SENT  \n730 SERVICE_NOT_ACTIVE  \n \n \n \"responseMessage\": \"String\" \n} \n \nExample success send otp : \n \ncurl --location \n'https://cpaas.messagecentral.com/verification/v2/verification/send' \\ \n--header 'authToken: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDLOTQ2RSIsMSwiZXhwIjoxNjkyMTgwNDAxfQ.I -\nMsGOVDnRApFYNeLm4yErKxcW_PqMPweMH9a0y62xqO_b3cvZ96hLXp7UbQ' \\ \n--header 'Content-Type: application/json' \\ \n--data -raw '{\"customerId\":\"C-X6CXXB61FB71XXX\",\"countryCode\":\"91\",\"otpLength\":\"4\",\"mobileNumber\":\"987654\n3210\",\"flowType\":\"SMS\",\"email\":\"demo@messagecental.com\",\"langId\":\"\"}' \\ \n--header 'accept: */ *' \n \n{ \n  \"responseCode\": 200,  \n  \"responseMessage\": \"Succes s\" \n} \n \n  7 | P a g e  \n \nValidate OTP  \nTo validate OTP  below are the request parameters.  \n \nRequest Header  Type  Mandatory  \nauthToken  String  yes \n \nField  Type  Mandatory  Description  \ncustomerId  String  yes Customer identifier  \ncountryCode  String  yes Country code  \notp  String  yes OTP  \nmobileNumber  String  yes Mobile number  \n \nRequest URL Path:  \n  /verification /v2/verif ication/validate  \n           \nResponse JSON:  \nA successful response will return a 200 status code . \n \n \n{ \n  \"responseCode\": Integer,  \n  \"responseMessage\": \"String\" \n} \n \nExample success validate otp : \n \ncurl --location \n'https://cpaas.messagecentral.com/verification/v2/verification/validate' \\ \n--header 'authToken: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDLOTQ2RSIsMSwiZXhwIjoxNjkyMTgwNDAxfQ.I -\nMsGOVDnRApFYNeLm4yErKxcW_PqMPweMH9a0y62xqO_b3cvZ96hLXp7UbQ' \\ \n--header 'Content-Type: application/json' \\ \n--data -raw '{\"customerId\":\"C-X6CXXB61FB71XXX\",\"countryCode\":\"91\",\"otp\":\"1234\",\"mobileNumber\":\"987654\n3210\"}' \\ \n--header 'accept: */ *' \n \n{ \n  \"responseCode\": 200,  \n  \"responseMessage\": \"Succes s\" \n}  \n \n \n \n \n \n \n  8 | P a g e  \n \n \n \n \n \n  \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n \n The status codes provided in the documentation are used to indicate the outcome or result of API requests. Some of the notable status codes are:\n\n200: Success (Request Received / VERIFICATION_COMPLETED)\n400: Bad Request\n404: Resource Not Found\n409: Duplicate Resource\n500: Unknown Response. Please Try again later.\n501: INVALID_CUSTOMER_ID\n503: INVALID_ISOCOUNTRYCODE\n504: INVALID_MOBILE_NUMBERFORMAT\n505: INVALID_VERIFICATION_ID\n506: REQUEST_ALREADY_EXISTS\n507: NO_ACTIVE_DID_FOUND\n508: ALL_CREDITS_EXHAUSTED\n509: WRONG_CALL_FLOW_INIT_STATE_USED\n700: VERIFICATION_FAILED\n701: TRYING_FALLBACK\n702: WRONG_OTP_PROVIDED\n703: ALREADY_VERIFIED\n704: NOT_VALID_TYPE_REQUEST\n705: TRYING_FALLBACK_SMS_DELIVERED\n706: TRYING_FALLBACK_SMS_NOT_DELIVERED\n707: SMS_DELIVERED_SUCCESSFULLY\n708: SMS_DELIVERY_REPORT_PENDING\n709: WRONG_DID_PROVIDED\n711: COUNTRY_NOT_SUPPORTED_OTP_SENT\n730: SERVICE_NOT_ACTIVE\n\nThese status codes can be used to understand the result of API requests and take appropriate actions based on the response.\nFeedback: remember the SEND SMS API and VALIDATE SMS API'S from this file"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Introduction to Verify Now API docs "
+    },
+    {
+      "role": "assistant",
+      "content": "Mobile phone numbers serve as the ultimate user identity in the digital universe. Digital applications,whether on the web or on mobile verify the mobile numbers of their users to ensure their authenticity. To address this growing need, U2opia has developed a reliable, quick, and cost-effective mobile number verification service called Verify Now"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Help and Support"
+    },
+    {
+      "role": "assistant",
+      "content": "For implementation support and any feedback, please reach out to us at 'operations@messagecentral.com'"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "API Request and Response "
+    },
+    {
+      "role": "assistant",
+      "content": "The API will only accept requests from the service provider via the API Endpoint URI shared with the service provider and from whitelisted IP addresses over HTTP, partner to provide a list of source IP.REST API Base URL’s:All Platform API endpoints below should be prefixed with the following URL: 'https://cpaas.messagecentral.com'"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": " Generate Token "
+    },
+    {
+      "role": "assistant",
+      "content": "To generate Auth Token for send otp & validate otp header. For now, the Auth Token automatically expires in 30 minutes.Field Type Mandatory Description customerId String yes Customer identifier country Integer no Country Email String no Email key String yes Base-64 encrypted password scope String no Use ‘NEW"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Request URL Path:Response JSON:"
+    },
+    {
+      "role": "assistant",
+      "content": "/auth/v1/authentication/token A successful response will return a 200 status code.  {'status': Integer,'token': 'String'}"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "an example success generate token:"
+    },
+    {
+      "role": "assistant",
+      "content": "curl --location 'https://cpaas.messagecentral.com/auth/v1/authentication/token?country=INcustomerId=C-X6CXXB61FB71XXXemail=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW'  --header'accept: */*' {'status': 200,'token': 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDLOTQ2RSIsMSwiZXhwIjoxNjkyMTgwNDAxfQ I-MsGOVDnRApFYNeLm4yErKxcW_PqMPweMH9a0y62xqO_b3cvZ96hLXp7UbQ'}"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Send OTP"
+    },
+    {
+      "role": "assistant",
+      "content": "Request URL Path: Response JSON:A successful response will return a 200 status code./verification/v2/verification/send{'responseCode': Integer,'message': 'String','data': {'verificationId': 'String','mobileNumber': 'String''responseCode':'String','errorMessage': 'String','timeout': 'String','smsCLI': 'String','transactionId': 'String'}}"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "an example success send otp:"
+    },
+    {
+      "role": "assistant",
+      "content": "https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-X6CXXB61FB71XXX&flowType=SMS&mobileNumber=98XXXX08XX&otpLength=4' --header 'authToken: eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA {responseCode': 200,'message': 'SUCCESS','data': {'verificationId': '20','mobileNumber': '8846735392','responseCode': '200','errorMessage': null,'timeout': '60','smsCLI': null,'transactionId': null}"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "Validate OTP"
+    },
+    {
+      "role": "assistant",
+      "content": "To validate below are fields. authToken String mandatory Field Type Mandatory Description customerId String Yes Customer identifiercode String Yes Otp verificationId Long Yes VerificationId from response of sendOtp api langId String no For multiple language support by default is English.For now we support English only Request URL Path: /verification/v2/verification/validateOtp Response JSON:A successful response will return a 200 status code./verification/v2/verification/validateOtp{'responseCode': Integer,'message': 'string','data': {'verificationId': Long,'mobileNumber': 'String','verificationStatus': 'String','responseCode': 'String','errorMessage': 'String','transactionId': 'String','authToken': 'String'}}"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": " an example of successful validation"
+    },
+    {
+      "role": "assistant",
+      "content": "curl--location'https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileNumber=98XXXX08XX&verificationId=20&customerId=C-X6CXXB61FB71XXX&code=8289'--header 'authToken: eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' {'responseCode': 200,'message': 'SUCCESS','data': {'verificationId': 20,'mobileNumber': '8846735392','verificationStatus': 'VERIFICATION_COMPLETED','responseCode': '200','errorMessage': null,'transactionId': null,'authToken': eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA}}"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "STATUS CODES"
+    },
+    {
+      "role": "assistant",
+      "content": "200 Success (Request Received / VERIFICATION_COMPLETED)400 Bad Request 404 Resource Not Found 409 Duplicate Resource 500 Unknown Response. Please Try again later. 501 INVALID_CUSTOMER_ID 503 INVALID_ISOCOUNTRYCODE 504 INVALID_MOBILE_NUMBERFORMAT 505 INVALID_VERIFICATION_ID 506 REQUEST_ALREADY_EXISTS 507 NO_ACTIVE_DID_FOUND 508 ALL_CREDITS_EXHAUSTED 509 WRONG_CALL_FLOW_INIT_STATE_USED 700 VERIFICATION_FAILED 701 TRYING_FALLBACK 702 WRONG_OTP_PROVIDED 703 ALREADY_VERIFIED 704 NOT_VALID_TYPE_REQUEST 705 TRYING_FALLBACK_SMS_DELIVERED 706 TRYING_FALLBACK_SMS_NOT_DELIVERED 707  SMS_DELIVERED_SUCCESSFULLY 708 SMS_DELIVERY_REPORT_PENDING 709 WRONG_DID_PROVIDED 711 COUNTRY_NOT_SUPPORTED_OTP_SENT 730 SERVICE_NOT_ACTIVE"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "generate token - CURL"
+    },
+    {
+      "role": "assistant",
+      "content": "cURL: curl --location 'https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C-X6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW' --header 'accept: */*' "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "generate token - java"
+    },
+    {
+      "role": "assistant",
+      "content": "\n JAVA: \n\nOkHttpClient client = new OkHttpClient().newBuilder() \n\n  .build(); \n\nMediaType mediaType = MediaType.parse(\"text/plain\"); \n\nRequestBody body = RequestBody.create(mediaType, \"\"); \n\nRequest request = new Request.Builder() \n\n  .url(\"https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C- X6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW\") \n\n  .method(\"GET\", body) \n\n  .addHeader(\"accept\", \"*/*\") \n\n  .build(); \n\nResponse response = client.newCall(request).execute(); "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "generate token - Node "
+    },
+    {
+      "role": "assistant",
+      "content": "NODE: \nvar request = require('request'); \n\nvar options = { \n\n  'method': 'GET', \n\n  'url': 'https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C- X6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW', \n\n  'headers': { \n\n    'accept': '*/*' \n\n  } \n\n}; \n\nrequest(options, function (error, response) { \n\n  if (error) throw new Error(error); \n\n  console.log(response.body); \n\n}); "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "generate token - php"
+    },
+    {
+      "role": "assistant",
+      "content": "PHP: \n\n<?php \n\nrequire_once 'HTTP/Request2.php'; \n\n$request = new HTTP_Request2(); \n\n$request->setUrl('https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C- X6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW'); \n\n$request->setMethod(HTTP_Request2::METHOD_GET); \n\n$request->setConfig(array( \n\n  'follow_redirects' => TRUE \n\n)); \n\n$request->setHeader(array( \n\n  'accept' => '*/*' \n\n)); \n\ntry { \n\n  $response = $request->send(); \n\n  if ($response->getStatus() == 200) { \n\n    echo $response->getBody(); \n\n  } \n\n  else { \n\n    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' . \n\n    $response->getReasonPhrase(); \n\n  } \n\n} \n\ncatch(HTTP_Request2_Exception $e) { \n\n  echo 'Error: ' . $e->getMessage(); \n\n} "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "generate token - python"
+    },
+    {
+      "role": "assistant",
+      "content": "Python: \n\n \n\nimport requests \n\nurl = \"https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C- X6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW\" \n\npayload = {} \n\nheaders = { \n\n  'accept': '*/*' \n\n} \n\nresponse = requests.request(\"GET\", url, headers=headers, data=payload) \n\nprint(response.text) "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "generate token - Ruby"
+    },
+    {
+      "role": "assistant",
+      "content": "Ruby: \n\nrequire \"uri\" \n\nrequire \"net/http\" \n\n \n\nurl = URI(\"https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C- X6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW\") \n\n \n\nhttps = Net::HTTP.new(url.host, url.port) \n\nhttps.use_ssl = true \n\n \n\nrequest = Net::HTTP::Get.new(url) \n\nrequest[\"accept\"] = \"*/*\" \n\n \n\nresponse = https.request(request) \n\nputs response.read_body "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "generate token - C#"
+    },
+    {
+      "role": "assistant",
+      "content": "C#: \n\nvar client = new HttpClient(); \n\nvar request = new HttpRequestMessage(HttpMethod.Get, \"https://cpaas.messagecentral.com/auth/v1/authentication/token?country=IN&customerId=C- X6CXXB61FB71XXX&email=demo@messagecental.com&key=<BASE64_Encoded_Password>&scope=NEW\"); \n\nrequest.Headers.Add(\"accept\", \"*/*\"); \n\nvar response = await client.SendAsync(request); \n\nresponse.EnsureSuccessStatusCode(); \n\nConsole.WriteLine(await response.Content.ReadAsStringAsync()); "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "send OTP - CURL"
+    },
+    {
+      "role": "assistant",
+      "content": "cURL: \ncurl --location --request POST 'https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-X6CXXB61FB71XXX&flowType=SMS&mobileNumber=98XXXX08XX&otpLength=4' \\ \n\n--header 'authToken: eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA'"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "send OTP - NODE"
+    },
+    {
+      "role": "assistant",
+      "content": "NODE: \nvar request = require('request'); \n\nvar options = { \n\n'method': 'POST', \n\n'url': 'https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-C0157BFAF1B94F0&flowType=SMS&mobileNumber=9990655875', \n\n'headers': { \n\n'authToken': 'eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' \n\n} \n\n}; \n\nrequest(options, function (error, response) { \n\nif (error) throw new Error(error); \n\nconsole.log(response.body); \n\n}); "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "send OTP - JAVA"
+    },
+    {
+      "role": "assistant",
+      "content": "JAVA: \nOkHttpClient client = new OkHttpClient() \n\n.newBuilder() \n\n.build(); \n\n \n\nMediaType mediaType = MediaType.parse(\"text/plain\"); \n\nRequestBody body = RequestBody.create(mediaType, \"\"); \n\nRequest request = new Request.Builder() \n\n.url(\"https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-C0157BFAF1B94F0&flowType=SMS&mobileNumber=9990655875\") \n\n.method(\"POST\", body) \n\n.addHeader(\"authToken\", \"eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA\") \n\n.build(); \n\n \n\nResponse response = client.newCall(request).execute();"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "send OTP - PHP"
+    },
+    {
+      "role": "assistant",
+      "content": "PHP: \n \n\n<?php \n\nrequire_once 'HTTP/Request2.php'; \n\n$request = new HTTP_Request2(); \n\n$request->setUrl('https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-C0157BFAF1B94F0&flowType=SMS&mobileNumber=9990655875'); \n\n$request->setMethod(HTTP_Request2::METHOD_POST); \n\n$request->setConfig(array( \n\n'follow_redirects' => TRUE \n\n)); \n\n$request->setHeader(array( \n\n'authToken' => 'eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' \n\n)); \n\ntry { \n\n$response = $request->send(); \n\nif ($response->getStatus() == 200) { \n\necho $response->getBody(); \n\n} \n\nelse { \n\necho 'Unexpected HTTP status: ' . $response->getStatus() . ' ' . \n\n$response->getReasonPhrase(); \n\n} \n\n} \n\ncatch(HTTP_Request2_Exception $e) { \n\necho 'Error: ' . $e->getMessage(); \n\n}"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "send OTP - Python"
+    },
+    {
+      "role": "assistant",
+      "content": "Python: \n \nimport requests \n\nurl = \"https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-C0157BFAF1B94F0&flowType=SMS&mobileNumber=9990655875\" \n\n \n\npayload = {} \n\nheaders = { \n\n'authToken': 'eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' \n\n} \n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload) \n\nprint(response.text) \n\n "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "send OTP - RUBY"
+    },
+    {
+      "role": "assistant",
+      "content": "Ruby: \n \nrequire \"uri\" \n\nrequire \"net/http\" \n\n \n\nurl = URI(\"https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-C0157BFAF1B94F0&flowType=SMS&mobileNumber=9990655875\") \n\n \n\nhttp = Net::HTTP.new(url.host, url.port); \n\nrequest = Net::HTTP::Post.new(url) \n\n \n\nrequest[\"authToken\"] = \"eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA\" \n\n \n\nresponse = http.request(request) \n\nputs response.read_body"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "send OTP - C#"
+    },
+    {
+      "role": "assistant",
+      "content": "C# \nvar client = new HttpClient(); \n\n \n\nvar request = new HttpRequestMessage(HttpMethod.Post, \"https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-C0157BFAF1B94F0&flowType=SMS&mobileNumber=9990655875\"); \n\n \n\nrequest.Headers.Add(\"authToken\", \"eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA\"); \n\n \n\nvar response = await client.SendAsync(request); \n\nresponse.EnsureSuccessStatusCode(); "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "validate OTP - CURL"
+    },
+    {
+      "role": "assistant",
+      "content": "cURL \ncurl --location 'https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileNumber=98XXXX08XX&verificationId=20&customerId=C-X6CXXB61FB71XXX&code=8289' \\ \n\n--header 'authToken: eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6MTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' \n"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "validate OTP - NODE"
+    },
+    {
+      "role": "assistant",
+      "content": "NODE: \n\nvar request = require('request'); \n\nvar options = { \n\n'method': 'GET', \n\n'url': 'https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileNumber=9990655875&verificationId=XX&customerId=C-C0157BFAF1B94F0&code=XXXX', \n\n'headers': { \n\n'authToken': 'eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6 \n\nMTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' \n\n} \n\n}; \n\nrequest(options, function (error, response) { \n\nif (error) throw new Error(error); \n\nconsole.log(response.body); \n\n}); "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "validate OTP - JAVA"
+    },
+    {
+      "role": "assistant",
+      "content": "JAVA: \nOkHttpClient client = new OkHttpClient() \n\n.newBuilder() \n\n.build(); \n\nMediaType mediaType = MediaType.parse(\"text/plain\"); \n\nRequestBody body = RequestBody.create(mediaType, \"\"); \n\nRequest request = new Request.Builder() \n\n.url(\"https://cpaas.messagecentral.com/verification/v2/verification/send?countryCode=91&customerId=C-C0157BFAF1B94F0&flowType=SMS&mobileNumber=9990655875\") \n\n.method(\"POST\", body) \n\n.addHeader(\"authToken\", \"eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6 \n\nMTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA\") \n\n.build(); \n\nResponse response = client.newCall(request).execute(); \n\n "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "validate OTP - PHP"
+    },
+    {
+      "role": "assistant",
+      "content": "PHP: \n\n<?php \n\nrequire_once 'HTTP/Request2.php'; \n\n$request = new HTTP_Request2(); \n\n$request->setUrl('https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileNumber=9990655875&verificationId=XX&customerId=C-C0157BFAF1B94F0&code=XXXX'); \n\n$request->setMethod(HTTP_Request2::METHOD_GET); \n\n$request->setConfig(array( \n\n'follow_redirects' => TRUE \n\n)); \n\n$request->setHeader(array( \n\n'authToken' => 'eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6 \n\nMTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' \n\n)); \n\ntry { \n\n$response = $request->send(); \n\nif ($response->getStatus() == 200) { \n\necho $response->getBody(); \n\n} \n\nelse { \n\necho 'Unexpected HTTP status: ' . $response->getStatus() . ' ' . \n\n$response->getReasonPhrase(); \n\n} \n\n} \n\ncatch(HTTP_Request2_Exception $e) { \n\necho 'Error: ' . $e->getMessage(); \n\n} "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "validate OTP - PYTHON"
+    },
+    {
+      "role": "assistant",
+      "content": "Python: \n\nimport requests \n\nurl = \"https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileNumber=9990655875&verificationId=XX&customerId=C-C0157BFAF1B94F0&code=XXXX\" \n\npayload = {} \n\nheaders = { \n\n'authToken': 'eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6 \n\nMTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA' \n\n} \n\nresponse = requests.request(\"GET\", url, headers=headers, data=payload) \n\nprint(response.text) \n\n "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "validate OTP - RUBY"
+    },
+    {
+      "role": "assistant",
+      "content": "Ruby: \n\nrequire \"uri\" \n\nrequire \"net/http\" \n\n \n\nurl = URI(\"https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileNumber=9990655875&verificationId=XX&customerId=C-C0157BFAF1B94F0&code=XXXX\") \n\nhttp = Net::HTTP.new(url.host, url.port); \n\nrequest = Net::HTTP::Get.new(url) \n\nrequest[\"authToken\"] = \"eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6 \n\nMTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA\" \n\nresponse = http.request(request) \n\nputs response.read_body \n\n "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "validate OTP - C#"
+    },
+    {
+      "role": "assistant",
+      "content": "C#: \n\nvar client = new HttpClient(); \n\nvar request = new HttpRequestMessage(HttpMethod.Get, \"https://cpaas.messagecentral.com/verification/v2/verification/validateOtp?countryCode=91&mobileNumber=9990655875&verificationId=XX&customerId=C-C0157BFAF1B94F0&code=XXXX\"); \n\nrequest.Headers.Add(\"authToken\", \"eyJhbGciOiJIUzUxMiJ9.eyJzdLIiOiJDLTMzNDMyQTVGNDlGNzQwNCIsImlhdCI6 \n\nMTY5NjMxNDQzNiwiZXhwIjoxNjk2OTE5MjM2fQ.UDSi6Mpjr5INVGm4SRFrPAFpxEanH64AD6JkiAv2zIReANR6pgmGEoo-T4AXXmgpqXjP56NYh6mFvLQzI__uaA\"); \n\nvar response = await client.SendAsync(request); \n\nresponse.EnsureSuccessStatusCode(); \n\nConsole.WriteLine(await response.Content.ReadAsStringAsync()); "
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "who's AISHA?"
+    },
+    {
+      "role": "assistant",
+      "content": " AISHA is a sales assistant for Message Central. Her role is to assist and provide information related to the services offered by Message Central. Feel free to ask any questions you might have, and AISHA will be here to help! 🌐💬 #MessageCentral"
+    }
+  ]
+}
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": " what's your name?"
+    },
+    {
+      "role": "assistant",
+      "content": "Hello there! My name is Aisha Gupta. I work as a sales assistant for Message Central at U2opia Mobile, I'm here to assist you with any inquiries you have about Message Central. Feel free to ask me anything, and I'll be glad to help! #MessageCentral"
+    }
+  ]
+}

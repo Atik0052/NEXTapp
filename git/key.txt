@@ -1,0 +1,8 @@
+OTP SMS 
+SMS Rates
+OTP Verification API 
+SMS marketing
+Sending and Validating OTP
+OTP Authentication
+Bulk SMS Marketing 
+A2P Messaging 
