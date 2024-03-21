@@ -1,0 +1,3 @@
+[submodule "qr-tools"]
+	path = qr-tools
+	url = https://git-codecommit.ap-south-1.amazonaws.com/v1/repos/cpaas-tools
